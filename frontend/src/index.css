@@ -40,6 +40,8 @@ body {
   background: #334155;
 }
 
+/* ─── Glassmorphism Utility Classes ─── */
+
 .glass-card {
   background-color: rgba(12, 16, 27, 0.9);
   backdrop-filter: blur(12px);
@@ -71,4 +73,113 @@ body {
 .glass-input:focus {
   border-color: #6366f1;
   box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.5);
+}
+
+/* ─── Dot Grid Background Pattern ─── */
+
+.dot-grid-bg {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.06) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+/* ─── Neon Glow Utilities ─── */
+
+.neon-glow-indigo {
+  filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.35));
+}
+
+.neon-glow-emerald {
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.35));
+}
+
+.neon-glow-rose {
+  filter: drop-shadow(0 0 8px rgba(244, 63, 94, 0.35));
+}
+
+/* ─── Floating Navbar ─── */
+
+.navbar-floating {
+  background-color: rgba(2, 6, 16, 0.82);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid rgba(30, 41, 59, 0.7);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(99, 102, 241, 0.05) inset;
+}
+
+/* ─── Ambient Glow Halo (for hover cards) ─── */
+
+.ambient-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  opacity: 0;
+  filter: blur(40px);
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.group:hover .ambient-glow {
+  opacity: 1;
+}
+
+/* ─── Smooth range input styling ─── */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  background: #161d2e;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #6366f1;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+  transition: transform 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* ─── Checkbox Styling ─── */
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid #26314c;
+  background: #0c101b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background: #6366f1;
+  border-color: #6366f1;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
 }
