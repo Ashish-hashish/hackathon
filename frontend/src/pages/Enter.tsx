@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { api, UserStatusResponse } from '../api/client';
-import { Cpu, CheckCircle2, AlertCircle, Loader2, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import { Cpu, CheckCircle2, AlertCircle, Loader2, ArrowRight, ShieldCheck, Zap, Lock, Sparkles } from 'lucide-react';
 
 interface EnterProps {
   onEntered: (entryResult?: { entry_id: string; status: string }) => void;
@@ -162,80 +162,88 @@ export const Enter: React.FC<EnterProps> = ({ onEntered, statusData, selectedEve
   const windowState = statusData?.window_state || 'OPEN';
 
   return (
-    <div className="max-w-xl mx-auto my-12 p-6 sm:p-8 bg-slate-900 border border-slate-800 rounded-2xl shadow-xl">
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
-          <Zap className="w-3.5 h-3.5" />
-          Window State: {windowState}
-        </div>
-        <h2 className="text-3xl font-extrabold text-white tracking-tight">Join Drop Queue</h2>
-        <p className="text-sm text-slate-400 mt-2 max-w-md mx-auto">
-          Entering at second 1 or minute 5 is identical. Queue position is determined strictly by the cryptographic draw.
-        </p>
-      </div>
+    <div className="max-w-2xl mx-auto my-12 px-4">
+      {/* Outer Card */}
+      <div className="p-6 sm:p-8 bg-[#0d121e] border border-[#1b2338] rounded-2xl shadow-2xl overflow-hidden relative">
+        <div className="h-1 w-full absolute top-0 left-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500" />
 
-      {error && (
-        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-start gap-3 text-red-400 text-sm">
-          <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
-          <span>{error}</span>
-        </div>
-      )}
-
-      {success && (
-        <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-start gap-3 text-emerald-400 text-sm">
-          <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
-          <span>Entry verified and recorded! Transitioning to live waiting room...</span>
-        </div>
-      )}
-
-      <div className="p-5 rounded-xl bg-slate-950 border border-slate-800/80 mb-6 space-y-3">
-        <div className="flex items-center gap-3 text-slate-300 text-sm">
-          <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
-          <span>Idempotent submission: duplicate requests produce zero extra tickets.</span>
-        </div>
-        <div className="flex items-center gap-3 text-slate-300 text-sm">
-          <Cpu className="w-5 h-5 text-teal-400 shrink-0" />
-          <span>Client-side Proof-of-Work (PoW) solves in Web Worker to prevent automation.</span>
-        </div>
-      </div>
-
-      {powProgress && (
-        <div className="mb-6 p-4 rounded-xl bg-slate-950 border border-slate-800">
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
-            <span className="flex items-center gap-2">
-              <Cpu className="w-4 h-4 text-emerald-400 animate-pulse" />
-              Solving Hashcash SHA-256...
-            </span>
-            <span className="font-mono">{powProgress.iterations.toLocaleString()} hashes</span>
+        <div className="text-center mb-8 pt-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono font-semibold uppercase tracking-wider mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Window State: {windowState}
           </div>
-          <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
-            <div className="bg-gradient-to-r from-emerald-500 to-teal-400 h-2 rounded-full animate-pulse w-full"></div>
-          </div>
-          {powProgress.durationMs && (
-            <p className="text-[11px] text-emerald-400 mt-2 font-mono">
-              ✓ Solved in {powProgress.durationMs.toFixed(1)} ms
-            </p>
-          )}
+          <h2 className="text-3xl font-black text-white tracking-tight">Join Drop Queue</h2>
+          <p className="text-xs text-slate-400 mt-2 max-w-md mx-auto leading-relaxed">
+            Entering at second 1 or minute 5 is identical. Queue position is determined strictly by the cryptographic draw.
+          </p>
         </div>
-      )}
 
-      <button
-        onClick={startEntryFlow}
-        disabled={loading || windowState !== 'OPEN' || success}
-        className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-600 hover:to-teal-500 text-slate-950 font-bold text-base transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2 disabled:opacity-50"
-      >
-        {loading ? (
-          <>
-            <Loader2 className="w-5 h-5 animate-spin" />
-            <span>Processing Entry...</span>
-          </>
-        ) : (
-          <>
-            <span>Submit Entry to Drop</span>
-            <ArrowRight className="w-5 h-5" />
-          </>
+        {error && (
+          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-start gap-3 text-red-400 text-xs">
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+            <span>{error}</span>
+          </div>
         )}
-      </button>
+
+        {success && (
+          <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-start gap-3 text-emerald-400 text-xs">
+            <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+            <span>Entry verified and recorded! Transitioning to live waiting room...</span>
+          </div>
+        )}
+
+        <div className="p-4 rounded-xl bg-[#080b12] border border-[#182133] mb-6 space-y-2.5">
+          <div className="flex items-center gap-3 text-slate-300 text-xs">
+            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>Idempotent submission: duplicate requests produce zero extra tickets.</span>
+          </div>
+          <div className="flex items-center gap-3 text-slate-300 text-xs">
+            <Cpu className="w-4 h-4 text-indigo-400 shrink-0" />
+            <span>Client-side Proof-of-Work (PoW) solves in Web Worker to prevent automation.</span>
+          </div>
+        </div>
+
+        {powProgress && (
+          <div className="mb-6 p-4 rounded-xl bg-[#080b12] border border-[#182133]">
+            <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
+              <span className="flex items-center gap-2">
+                <Cpu className="w-4 h-4 text-indigo-400 animate-pulse" />
+                Solving Hashcash SHA-256...
+              </span>
+              <span className="font-mono text-white font-bold">{powProgress.iterations.toLocaleString()} hashes</span>
+            </div>
+            <div className="w-full bg-[#141b2c] rounded-full h-2 overflow-hidden">
+              <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-400 h-2 rounded-full animate-pulse w-full"></div>
+            </div>
+            {powProgress.durationMs && (
+              <p className="text-[11px] text-emerald-400 mt-2 font-mono flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                Solved in {powProgress.durationMs.toFixed(1)} ms
+              </p>
+            )}
+          </div>
+        )}
+
+        <button
+          onClick={startEntryFlow}
+          disabled={loading || windowState !== 'OPEN' || success}
+          className="w-full py-4 px-6 rounded-xl bg-[#5452ee] hover:bg-[#4744db] text-white font-bold text-sm transition-all shadow-xl shadow-indigo-600/25 flex items-center justify-center gap-2 disabled:opacity-50"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" />
+              <span>Processing Entry...</span>
+            </>
+          ) : (
+            <>
+              <span>Submit Entry to Drop</span>
+              <ArrowRight className="w-5 h-5" />
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 };
+
+export default Enter;
